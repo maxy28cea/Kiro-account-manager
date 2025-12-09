@@ -9,7 +9,7 @@ import { TagManageDialog } from './TagManageDialog'
 import { ExportDialog } from './ExportDialog'
 import { Button } from '../ui'
 import type { Account } from '@/types/account'
-import { ArrowLeft, Loader2 } from 'lucide-react'
+import { ArrowLeft, Loader2, Users } from 'lucide-react'
 
 interface AccountManagerProps {
   onBack?: () => void
@@ -95,14 +95,19 @@ export function AccountManager({ onBack }: AccountManagerProps): React.ReactNode
   return (
     <div className="flex flex-col h-full">
       {/* 顶部工具栏 */}
-      <header className="flex items-center justify-between gap-4 px-6 py-3 border-b bg-background">
+      <header className="flex items-center justify-between gap-4 px-6 py-4 border-b bg-gradient-to-r from-primary/5 to-transparent">
         <div className="flex items-center gap-4">
           {onBack && (
             <Button variant="ghost" size="icon" onClick={onBack}>
               <ArrowLeft className="h-5 w-5" />
             </Button>
           )}
-          <h1 className="text-lg font-semibold">账户管理</h1>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Users className="h-5 w-5 text-primary" />
+            </div>
+            <h1 className="text-lg font-semibold text-primary">账户管理</h1>
+          </div>
         </div>
         
         {/* 工具栏 */}

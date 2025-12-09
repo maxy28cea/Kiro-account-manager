@@ -555,13 +555,17 @@ export function AddAccountDialog({ isOpen, onClose }: AddAccountDialogProps): Re
           return
         }
 
+        // 根据 provider 自动确定 authMethod
+        const credProvider = cred.provider || 'BuilderId'
+        const credAuthMethod = cred.authMethod || (credProvider === 'BuilderId' ? 'IdC' : 'social')
+
         const result = await window.api.verifyAccountCredentials({
           refreshToken: cred.refreshToken,
           clientId: cred.clientId || '',
           clientSecret: cred.clientSecret || '',
           region: cred.region || 'us-east-1',
-          authMethod: cred.authMethod || 'IdC',
-          provider: cred.provider || 'BuilderId'
+          authMethod: credAuthMethod,
+          provider: credProvider
         })
 
         if (result.success && result.data) {
@@ -573,12 +577,23 @@ export function AddAccountDialog({ isOpen, onClose }: AddAccountDialogProps): Re
             return
           }
           
+          // 根据 provider 确定 idp 和 authMethod
+          const provider = (cred.provider || 'BuilderId') as 'BuilderId' | 'Github' | 'Google'
+          const idpMap: Record<string, 'BuilderId' | 'Github' | 'Google'> = {
+            'BuilderId': 'BuilderId',
+            'Github': 'Github',
+            'Google': 'Google'
+          }
+          const idp = idpMap[provider] || 'BuilderId'
+          // GitHub 和 Google 使用 social 认证方式
+          const authMethod = cred.authMethod || (provider === 'BuilderId' ? 'IdC' : 'social')
+          
           const now = Date.now()
           addAccount({
             email,
             userId,
             nickname: email ? email.split('@')[0] : undefined,
-            idp: 'BuilderId',
+            idp,
             credentials: {
               accessToken: result.data.accessToken,
               csrfToken: '',
@@ -587,8 +602,8 @@ export function AddAccountDialog({ isOpen, onClose }: AddAccountDialogProps): Re
               clientSecret: cred.clientSecret || '',
               region: cred.region || 'us-east-1',
               expiresAt: result.data.expiresIn ? now + result.data.expiresIn * 1000 : now + 3600 * 1000,
-              authMethod: cred.authMethod || 'IdC',
-              provider: (cred.provider || 'BuilderId') as 'BuilderId' | 'Github' | 'Google'
+              authMethod,
+              provider
             },
             subscription: {
               type: result.data.subscriptionType as SubscriptionType,
@@ -1196,7 +1211,10 @@ export function AddAccountDialog({ isOpen, onClose }: AddAccountDialogProps): Re
                 <>
                   <div className="p-3 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/20">
                     <p className="text-xs text-blue-600 dark:text-blue-400">
-                      支持 JSON 数组格式，每个对象包含: <code className="px-1 bg-blue-100 dark:bg-blue-900/40 rounded">refreshToken</code>, <code className="px-1 bg-blue-100 dark:bg-blue-900/40 rounded">clientId</code>, <code className="px-1 bg-blue-100 dark:bg-blue-900/40 rounded">clientSecret</code>
+                      支持 JSON 数组格式。必填: <code className="px-1 bg-blue-100 dark:bg-blue-900/40 rounded">refreshToken</code>。
+                      可选: <code className="px-1 bg-blue-100 dark:bg-blue-900/40 rounded">provider</code> (BuilderId/Github/Google)、
+                      <code className="px-1 bg-blue-100 dark:bg-blue-900/40 rounded">clientId</code>、
+                      <code className="px-1 bg-blue-100 dark:bg-blue-900/40 rounded">clientSecret</code>
                     </p>
                   </div>
 
@@ -1205,18 +1223,21 @@ export function AddAccountDialog({ isOpen, onClose }: AddAccountDialogProps): Re
                       JSON 凭证数据 <span className="text-destructive">*</span>
                     </label>
                     <textarea
-                      className="w-full min-h-[150px] px-3 py-2.5 text-sm rounded-xl border border-input bg-background/50 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none font-mono text-xs"
+                      className="w-full min-h-[180px] px-3 py-2.5 text-sm rounded-xl border border-input bg-background/50 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none font-mono text-xs"
                       placeholder={`[
   {
     "refreshToken": "xxx",
     "clientId": "xxx",
     "clientSecret": "xxx",
-    "region": "us-east-1"
+    "provider": "BuilderId"
   },
   {
     "refreshToken": "yyy",
-    "clientId": "yyy",
-    "clientSecret": "yyy"
+    "provider": "Github"
+  },
+  {
+    "refreshToken": "zzz",
+    "provider": "Google"
   }
 ]`}
                       value={oidcBatchData}

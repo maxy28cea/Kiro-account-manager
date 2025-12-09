@@ -1,7 +1,6 @@
 import { useAccountsStore } from '@/store/accounts'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui'
-import { Button } from '../ui'
-import { Eye, EyeOff, RefreshCw, Clock, Trash2, Download, Upload, Globe, Repeat, Palette, Moon, Sun, Fingerprint, Info, ChevronDown, ChevronUp } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle, Button } from '../ui'
+import { Eye, EyeOff, RefreshCw, Clock, Trash2, Download, Upload, Globe, Repeat, Palette, Moon, Sun, Fingerprint, Info, ChevronDown, ChevronUp, Settings, Database } from 'lucide-react'
 import { useState } from 'react'
 import { ExportDialog } from '../accounts/ExportDialog'
 
@@ -115,17 +114,29 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="p-6 space-y-6 max-w-2xl mx-auto">
-      <div>
-        <h1 className="text-2xl font-bold">设置</h1>
-        <p className="text-muted-foreground">配置应用的各项功能</p>
+    <div className="flex-1 p-6 space-y-6 overflow-auto">
+      {/* 页面头部 */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 p-6 border border-primary/20">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/20 to-transparent rounded-full blur-2xl" />
+        <div className="relative flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-primary shadow-lg shadow-primary/25">
+            <Settings className="h-6 w-6 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-primary">设置</h1>
+            <p className="text-muted-foreground">配置应用的各项功能</p>
+          </div>
+        </div>
       </div>
 
       {/* 主题设置 */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <Palette className="h-4 w-4" />
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Palette className="h-4 w-4 text-primary" />
+            </div>
             主题设置
           </CardTitle>
         </CardHeader>
@@ -200,10 +211,12 @@ export function SettingsPage() {
       </Card>
 
       {/* 隐私设置 */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            {privacyMode ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              {privacyMode ? <EyeOff className="h-4 w-4 text-primary" /> : <Eye className="h-4 w-4 text-primary" />}
+            </div>
             隐私设置
           </CardTitle>
         </CardHeader>
@@ -226,10 +239,12 @@ export function SettingsPage() {
       </Card>
 
       {/* Token 刷新设置 */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <RefreshCw className="h-4 w-4" />
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <RefreshCw className="h-4 w-4 text-primary" />
+            </div>
             自动刷新
           </CardTitle>
         </CardHeader>
@@ -257,27 +272,24 @@ export function SettingsPage() {
               </div>
               <div className="flex items-center justify-between pt-2 border-t">
                 <div>
-                  <p className="font-medium flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    检查间隔
-                  </p>
+                  <p className="font-medium">检查间隔</p>
                   <p className="text-sm text-muted-foreground">每隔多久检查一次账户状态</p>
                 </div>
-              <select
-                className="w-full h-9 px-3 rounded-lg border bg-background text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                value={autoRefreshInterval}
-                onChange={(e) => setAutoRefresh(true, parseInt(e.target.value))}
-              >
-                <option value="1">1 分钟</option>
-                <option value="3">3 分钟</option>
-                <option value="5">5 分钟</option>
-                <option value="10">10 分钟</option>
-                <option value="15">15 分钟</option>
-                <option value="20">20 分钟</option>
-                <option value="30">30 分钟</option>
-                <option value="45">45 分钟</option>
-                <option value="60">60 分钟</option>
-              </select>
+                <select
+                  className="w-[120px] h-9 px-3 rounded-lg border bg-background text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  value={autoRefreshInterval}
+                  onChange={(e) => setAutoRefresh(true, parseInt(e.target.value))}
+                >
+                  <option value="1">1 分钟</option>
+                  <option value="3">3 分钟</option>
+                  <option value="5">5 分钟</option>
+                  <option value="10">10 分钟</option>
+                  <option value="15">15 分钟</option>
+                  <option value="20">20 分钟</option>
+                  <option value="30">30 分钟</option>
+                  <option value="45">45 分钟</option>
+                  <option value="60">60 分钟</option>
+                </select>
               </div>
             </>
           )}
@@ -285,10 +297,12 @@ export function SettingsPage() {
       </Card>
 
       {/* 代理设置 */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <Globe className="h-4 w-4" />
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Globe className="h-4 w-4 text-primary" />
+            </div>
             代理设置
           </CardTitle>
         </CardHeader>
@@ -334,10 +348,12 @@ export function SettingsPage() {
       </Card>
 
       {/* 自动换号设置 */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <Repeat className="h-4 w-4" />
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Repeat className="h-4 w-4 text-primary" />
+            </div>
             自动换号
           </CardTitle>
         </CardHeader>
@@ -399,11 +415,11 @@ export function SettingsPage() {
       </Card>
 
       {/* 机器码管理提示 */}
-      <Card className="border-0 shadow-sm bg-purple-500/5 border-purple-500/20">
+      <Card className="border-0 shadow-sm bg-primary/5 border-primary/20 hover:shadow-md transition-shadow duration-200">
         <CardContent className="py-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-purple-500/10">
-              <Fingerprint className="h-5 w-5 text-purple-500" />
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Fingerprint className="h-5 w-5 text-primary" />
             </div>
             <div className="flex-1">
               <p className="font-medium text-sm">机器码管理</p>
@@ -420,9 +436,14 @@ export function SettingsPage() {
       </Card>
 
       {/* 数据管理 */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base">数据管理</CardTitle>
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Database className="h-4 w-4 text-primary" />
+            </div>
+            数据管理
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">

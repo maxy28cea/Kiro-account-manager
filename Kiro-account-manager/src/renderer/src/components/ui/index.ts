@@ -3,3 +3,5 @@ export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 export { Progress } from './progress'
 export { Badge, badgeVariants } from './badge'
 export { Alert, AlertTitle, AlertDescription } from './alert'
+export { Toggle } from './Toggle'
+export { Select } from './Select'

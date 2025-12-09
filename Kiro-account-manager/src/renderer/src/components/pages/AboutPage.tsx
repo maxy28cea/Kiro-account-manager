@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle, Button } from '../ui'
-import { Github, Heart, Code, ExternalLink, User, Coffee, MessageCircle, X, RefreshCw, Download, CheckCircle, AlertCircle } from 'lucide-react'
+import { Github, Heart, Code, ExternalLink, User, Coffee, MessageCircle, X, RefreshCw, Download, CheckCircle, AlertCircle, Info, Zap } from 'lucide-react'
 import kiroLogo from '@/assets/kiro-high-resolution-logo-transparent.png'
 import alipayQR from '@/assets/支付宝支付.png'
 import wechatQR from '@/assets/微信支付.png'
@@ -67,18 +67,21 @@ export function AboutPage() {
   }
 
   return (
-    <div className="p-6 space-y-6 max-w-2xl mx-auto">
+    <div className="flex-1 p-6 space-y-6 overflow-auto">
       {/* Header */}
-      <div className="text-center space-y-4 py-8">
-        <img 
-          src={kiroLogo} 
-          alt="Kiro" 
-          className={cn("h-20 w-auto mx-auto transition-all", darkMode && "invert brightness-0")} 
-        />
-        <div>
-          <h1 className="text-2xl font-bold">Kiro 账户管理器</h1>
-          <p className="text-muted-foreground">版本 {version}</p>
-        </div>
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 p-8 border border-primary/20">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/20 to-transparent rounded-full blur-2xl" />
+        <div className="relative text-center space-y-4">
+          <img 
+            src={kiroLogo} 
+            alt="Kiro" 
+            className={cn("h-20 w-auto mx-auto transition-all", darkMode && "invert brightness-0")} 
+          />
+          <div>
+            <h1 className="text-2xl font-bold text-primary">Kiro 账户管理器</h1>
+            <p className="text-muted-foreground">版本 {version}</p>
+          </div>
         <div className="flex gap-2 justify-center flex-wrap">
           <Button
             variant="outline"
@@ -104,13 +107,14 @@ export function AboutPage() {
         {/* 更新提示 */}
         {updateInfo?.hasUpdate && !showUpdateModal && (
           <div 
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-500/10 text-green-600 rounded-full text-sm cursor-pointer hover:bg-green-500/20"
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm cursor-pointer hover:bg-primary/20"
             onClick={() => setShowUpdateModal(true)}
           >
             <Download className="h-4 w-4" />
             发现新版本 v{updateInfo.latestVersion}
           </div>
         )}
+        </div>
       </div>
 
       {/* 更新弹窗 */}
@@ -240,9 +244,14 @@ export function AboutPage() {
       )}
 
       {/* Description */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base">关于本应用</CardTitle>
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Info className="h-4 w-4 text-primary" />
+            </div>
+            关于本应用
+          </CardTitle>
         </CardHeader>
         <CardContent className="text-sm text-muted-foreground space-y-3">
           <p>
@@ -258,9 +267,14 @@ export function AboutPage() {
       </Card>
 
       {/* Features */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base">主要功能</CardTitle>
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Zap className="h-4 w-4 text-primary" />
+            </div>
+            主要功能
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="space-y-2 text-sm text-muted-foreground">
@@ -289,15 +303,15 @@ export function AboutPage() {
               <strong>批量导入</strong>：支持 SSO Token 和 OIDC 凭证批量导入
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-purple-500 mt-0.5">✓</span>
+              <span className="text-primary mt-0.5">✓</span>
               <strong>机器码管理</strong>：修改设备标识符，防止账号关联封禁
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-purple-500 mt-0.5">✓</span>
+              <span className="text-primary mt-0.5">✓</span>
               <strong>自动换机器码</strong>：切换账号时自动更换机器码
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-purple-500 mt-0.5">✓</span>
+              <span className="text-primary mt-0.5">✓</span>
               <strong>账户机器码绑定</strong>：为每个账户分配唯一机器码
             </li>
             <li className="flex items-start gap-2">
@@ -317,10 +331,12 @@ export function AboutPage() {
       </Card>
 
       {/* Tech Stack */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <Code className="h-4 w-4" />
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Code className="h-4 w-4 text-primary" />
+            </div>
             技术栈
           </CardTitle>
         </CardHeader>
@@ -339,10 +355,12 @@ export function AboutPage() {
       </Card>
 
       {/* Author */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <User className="h-4 w-4" />
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <User className="h-4 w-4 text-primary" />
+            </div>
             作者
           </CardTitle>
         </CardHeader>
@@ -371,10 +389,12 @@ export function AboutPage() {
       </Card>
 
       {/* Sponsor */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <Coffee className="h-4 w-4" />
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Coffee className="h-4 w-4 text-primary" />
+            </div>
             赞助支持
           </CardTitle>
         </CardHeader>
@@ -402,7 +422,7 @@ export function AboutPage() {
       {/* Footer */}
       <div className="text-center text-xs text-muted-foreground py-4">
         <p className="flex items-center justify-center gap-1">
-          Made with <Heart className="h-3 w-3 text-red-500" /> for Kiro users
+          Made with <Heart className="h-3 w-3 text-primary" /> for Kiro users
         </p>
       </div>
     </div>

@@ -1,10 +1,10 @@
-import { Home, Users, Settings, Info, ChevronLeft, ChevronRight, Fingerprint } from 'lucide-react'
+import { Home, Users, Settings, Info, ChevronLeft, ChevronRight, Fingerprint, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import kiroLogo from '@/assets/kiro-high-resolution-logo-transparent.png'
 import kiroLogoSmall from '@/assets/Kiro Logo.svg'
 import { useAccountsStore } from '@/store/accounts'
 
-export type PageType = 'home' | 'accounts' | 'machineId' | 'settings' | 'about'
+export type PageType = 'home' | 'accounts' | 'machineId' | 'kiroSettings' | 'settings' | 'about'
 
 interface SidebarProps {
   currentPage: PageType
@@ -17,6 +17,7 @@ const menuItems: { id: PageType; label: string; icon: React.ElementType }[] = [
   { id: 'home', label: '主页', icon: Home },
   { id: 'accounts', label: '账户管理', icon: Users },
   { id: 'machineId', label: '机器码', icon: Fingerprint },
+  { id: 'kiroSettings', label: 'Kiro 设置', icon: Sparkles },
   { id: 'settings', label: '设置', icon: Settings },
   { id: 'about', label: '关于', icon: Info },
 ]

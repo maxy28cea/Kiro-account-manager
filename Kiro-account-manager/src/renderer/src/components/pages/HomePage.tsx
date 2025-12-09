@@ -88,17 +88,21 @@ export function HomePage() {
   const activeAccount = Array.from(accounts.values()).find(a => a.isActive)
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="flex-1 p-6 space-y-6 overflow-auto">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <img 
-          src={kiroLogo} 
-          alt="Kiro" 
-          className={cn("h-12 w-auto transition-all", darkMode && "invert brightness-0")} 
-        />
-        <div>
-          <h1 className="text-2xl font-bold">欢迎使用 Kiro 账户管理器</h1>
-          <p className="text-muted-foreground">管理你的 Kiro IDE 账号，一键切换，高效开发</p>
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 p-6 border border-primary/20">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-2xl" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/20 to-transparent rounded-full blur-2xl" />
+        <div className="relative flex items-center gap-4">
+          <img 
+            src={kiroLogo} 
+            alt="Kiro" 
+            className={cn("h-14 w-auto transition-all", darkMode && "invert brightness-0")} 
+          />
+          <div>
+            <h1 className="text-2xl font-bold text-primary">欢迎使用 Kiro 账户管理器</h1>
+            <p className="text-muted-foreground">管理你的 Kiro IDE 账号，一键切换，高效开发</p>
+          </div>
         </div>
       </div>
 
@@ -107,7 +111,7 @@ export function HomePage() {
         {statCards.map((stat) => {
           const Icon = stat.icon
           return (
-            <Card key={stat.label} className="border-0 shadow-sm">
+            <Card key={stat.label} className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className={`p-2.5 rounded-xl ${stat.bgColor}`}>
@@ -126,10 +130,12 @@ export function HomePage() {
 
       {/* Usage Stats */}
       {usageStats.validAccountCount > 0 && (
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base flex items-center gap-2">
-              <BarChart3 className="h-4 w-4 text-primary" />
+            <CardTitle className="text-base flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <BarChart3 className="h-4 w-4 text-primary" />
+              </div>
               额度统计
               <span className="text-xs font-normal text-muted-foreground">
                 (基于 {usageStats.validAccountCount} 个有效账号)
@@ -400,10 +406,12 @@ export function HomePage() {
       )}
 
       {/* Quick Tips */}
-      <Card className="border-0 shadow-sm">
+      <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <Shield className="h-4 w-4 text-primary" />
+          <CardTitle className="text-base flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Shield className="h-4 w-4 text-primary" />
+            </div>
             快速提示
           </CardTitle>
         </CardHeader>
@@ -431,11 +439,11 @@ export function HomePage() {
 
       {/* Feature Highlights */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-purple-500/10">
-                <Fingerprint className="h-5 w-5 text-purple-500" />
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Fingerprint className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <p className="font-medium text-sm">机器码管理</p>
@@ -447,11 +455,11 @@ export function HomePage() {
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-blue-500/10">
-                <FolderPlus className="h-5 w-5 text-blue-500" />
+              <div className="p-2 rounded-lg bg-primary/10">
+                <FolderPlus className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <p className="font-medium text-sm">分组管理</p>
@@ -463,11 +471,11 @@ export function HomePage() {
           </CardContent>
         </Card>
 
-        <Card className="border-0 shadow-sm">
+        <Card className="border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-green-500/10">
-                <Tag className="h-5 w-5 text-green-500" />
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Tag className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <p className="font-medium text-sm">标签管理</p>
